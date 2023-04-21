@@ -17,6 +17,6 @@ db = client["bigdata"]
 collection = db["final"]
 
 # 插入多个JSON文件到MongoDB调用上面函数
-insert_json_to_mongodb("data.json", collection)
+insert_json_to_mongodb("cloud_developer.json", collection)
 insert_json_to_mongodb("data_analyst.json", collection)
 insert_json_to_mongodb("data_scientist.json", collection)
