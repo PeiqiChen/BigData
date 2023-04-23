@@ -31,6 +31,3 @@ print(joblist)
 with open('jobarray.txt', 'w', encoding='utf-8') as f:
     for job in joblist:
         f.write(f"{[job[0]]}\t{[job[1]]}\n")
-
-def recommend(userprofile):
-    print("finish")

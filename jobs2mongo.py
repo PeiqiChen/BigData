@@ -8,6 +8,7 @@ def insert_json_to_mongodb(filename, collection):
         data_dict = json.load(f)
 
     # 将data插入collection
+    #collection.insert_one(data_dict)
     job_dict = {}
     for i in range(len(data_dict["data"])):
         job_dict[str(i)] = data_dict["data"][i]
