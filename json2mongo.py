@@ -26,3 +26,4 @@ for filename in os.listdir(json_dir):
     if filename.endswith(".json"):
         filepath = os.path.join(json_dir, filename)
         insert_json_to_mongodb(filepath, collection)
+        insert_json_to_mongodb(filepath, collection)

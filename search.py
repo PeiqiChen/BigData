@@ -8,7 +8,7 @@ def find_jobs_in_location_and_title(title, location= None):
 
     # 搜索
     jobs = collection.find({
-        "jobtitle": title,
+        "job_title": title,
         "data": {
             "$elemMatch": {
                 "job_city": location
@@ -20,7 +20,7 @@ def find_jobs_in_location_and_title(title, location= None):
     matching_jobs = []
     for document in jobs:
         for job in document["data"]:
-            if document["jobtitle"] == title and job["job_city"] == location:
+            if document["job_title"] == title and job["job_city"] == location:
                 matching_jobs.append(job)
 
     # Close connection to MongoDB
@@ -29,5 +29,5 @@ def find_jobs_in_location_and_title(title, location= None):
     return matching_jobs
 
 #测试：
-#jobs = find_jobs_in_location_and_title("data analyst")
-#print(jobs)
+jobs = find_jobs_in_location_and_title("cloud developer","Charlotte")
+print(jobs)
