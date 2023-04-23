@@ -1,5 +1,6 @@
 import pymongo
 import json
+import os
 
 def insert_json_to_mongodb(filename, collection):
     # 先把json换成字典
@@ -18,15 +19,11 @@ client = pymongo.MongoClient("mongodb://localhost:27017/")
 
 db = client["bigdata"]
 
-collection = db["final"]
+# 定义集合名称列表
+collections = ["cloud_developer", "data_scientist", "jobs_data", "product_manager", "researcher", "software_engineer", "technical_manager"]
 
-# 插入多个JSON文件到MongoDB调用上面函数
-# 待插入的JSON文件所在目录
-json_dir = "data"
-
-# 遍历目录下的所有JSON文件，并插入到MongoDB中
-for filename in os.listdir(json_dir):
-    if filename.endswith(".json"):
-        filepath = os.path.join(json_dir, filename)
-        insert_json_to_mongodb(filepath, collection)
-        insert_json_to_mongodb(filepath, collection)
+# 遍历列表并插入到MongoDB
+for collection_name in collections:
+    collection = db[collection_name]
+    filename = f"data/{collection_name}.json"
+    insert_json_to_mongodb(filename, collection)
