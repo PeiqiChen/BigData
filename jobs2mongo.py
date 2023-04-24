@@ -28,3 +28,4 @@ for collection_name in collections:
     collection = db[collection_name]
     filename = f"data/{collection_name}.json"
     insert_json_to_mongodb(filename, collection)
+
