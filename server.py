@@ -7,11 +7,12 @@ app = Flask(__name__)
 def users():
     return {"users": ["pc3082", "user2", "user3"]}
 
-@app.route("/search")
-def search():
+@app.route("/search/<role>/<location>")
+def search(role, location="United States"):
     f = open('test.json')
     data = json.load(f)
-    print(type(data))
+    print(role)
+    print(location)
     return data
 if __name__ == "__main__":
     app.run(debug=True)

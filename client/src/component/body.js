@@ -1,5 +1,6 @@
 import "../App.css";
-
+import SearchControlSmall from './searchControlSmall.js';
+import SearchControlLarge from './searchControlLarge.js';
 import { useEffect, useState } from 'react'
 import JobCard from './JobCard.js';
 
@@ -12,7 +13,7 @@ function Body(){
        // Create async function to fetch Reactjs posts from Reddit:
         async function fetchedJobsData() {
           setLoading(true)
-          const response = await fetch("/search")
+          const response = await fetch("/search/pc3082/software engineer")
           if (response.ok) {
             var dataJson = await response.json()
             dataJson = dataJson.data
@@ -41,6 +42,9 @@ function Body(){
       fetchedJobsData()
       }, [])
     return (
+      <div>
+        <SearchControlSmall /> 
+      <SearchControlLarge />
        
         <div className=" grid grid-cols-1 sm:grid-cols-1  md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-20 px-9 md:px-9 sm:px-20 ">
 
@@ -54,6 +58,8 @@ function Body(){
           
 
         </div>
+      </div>
+
     );
 }
 

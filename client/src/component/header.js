@@ -24,7 +24,6 @@ function Header() {
     <div className="container max-w-full relative">
       <header className="bg-primary space-x-4 pl-8 pr-4 pb-8 pt-4 flex place-content-between ">
         <div className="inline-block text-3xl font-bold text-white">
-          {/* <button onClick = {() => setBar(false)}>profile</button> */}
           <button onClick = {() => setBar(true)}>{hasBar ? <strong>search</strong> : 'search |'}</button>
           <button onClick = {() => setBar(false)}>{!hasBar ? <strong>recommendation</strong> : '| recommendation'}</button>
         </div>
@@ -33,7 +32,7 @@ function Header() {
         </div>
         <Toggle />
       </header>
-      <div>{hasBar ? <div className="navBar"><SearchControlLarge /><SearchControlSmall /></div> : <div></div>}</div>
+      {/* <div>{hasBar ? <div className="navBar"><SearchControlLarge /><SearchControlSmall /></div> : <div></div>}</div> */}
       {/* <SearchControlSmall /> */}
       {/* <SearchControlLarge /> */}
     </div>
