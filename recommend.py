@@ -36,12 +36,10 @@ def recommend(userprofile, data):
         # Iterate through all documents in the collection
         for document in cursor:
             # Extract job description field
-            for jobid in document.keys():
-                if jobid.isdigit():
-                    job_description = document[jobid].get('job_description', None)
-                    job_title = document[jobid].get('job_title', None)
-                    job_apply_link = document[jobid].get('job_apply_link', None)
-                    if job_description in result_list:
-                        ans.append((job_title,job_apply_link))
+            job_description = document.get('job_description', None)
+            job_title = document.get('job_title', None)
+            job_apply_link = document.get('job_apply_link', None)
+            if job_description in result_list:
+                ans.append((job_title,job_apply_link))
     return set(ans)
 print(recommend("researcher  new york", data))

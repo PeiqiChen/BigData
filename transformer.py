@@ -23,11 +23,9 @@ for collection_name in db.list_collection_names():
     # Iterate through all documents in the collection
     for document in cursor:
         # Extract job description field
-        for jobid in document.keys():
-            if jobid.isdigit():
-                job_description = document[jobid].get('job_description', None)
-                if job_description is not None:
-                    job_vector = model.encode(job_description)
-                    joblist[job_description]= job_vector.tolist()
+        job_description = document.get('job_description', None)
+        if job_description is not None:
+            job_vector = model.encode(job_description)
+            joblist[job_description]= job_vector.tolist()
 with open('transformer.json', 'w', encoding='utf-8') as f:
     json.dump(joblist, f, ensure_ascii=False)

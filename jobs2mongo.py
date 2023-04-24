@@ -11,8 +11,8 @@ def insert_json_to_mongodb(filename, collection):
     #collection.insert_one(data_dict)
     job_dict = {}
     for i in range(len(data_dict["data"])):
-        job_dict[str(i)] = data_dict["data"][i]
-    collection.insert_one(job_dict)
+        job_dict = data_dict["data"][i]
+        collection.insert_one(job_dict)
 
 # 建立MongoDB连接
 
@@ -28,4 +28,3 @@ for collection_name in collections:
     collection = db[collection_name]
     filename = f"data/{collection_name}.json"
     insert_json_to_mongodb(filename, collection)
-
