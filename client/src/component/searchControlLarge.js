@@ -29,10 +29,10 @@ function SearchControlLarge() {
             </div> 
             <div className="justify-between  flex align-middle place-items-center">
             <div className="flex  place-items-center">
-              <AiFillCheckSquare className="inline-block text-primary h-6 w-6 text-2xl mr-2 "/>
+              {/* <AiFillCheckSquare className="inline-block text-primary h-6 w-6 text-2xl mr-2 "/>
               <h3 className="inline-block text-lg font-semibold overflow-clip overflow-hidden text-center dark:text-gray-200">
-                Recommended
-              </h3>
+                Full Time Only
+              </h3> */}
             </div>
             <button className="bg-primary text-white font-bold text-xl px-8 py-2 rounded-md justify-self-end md:px-5 lg:px-8 hover:bg-primaryLight">
               Search
