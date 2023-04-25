@@ -29,17 +29,15 @@ def recommend(userprofile):
     result_list = df.sort_values(by=["similarityscore"], ascending=False).head(10)["sentence"].tolist()
 
     ans=[]
-    for collection_name in db.list_collection_names():
+    for collection_name in db.list_collection_names() :
+        if collection_name =='job_vectors': continue
         collection = db[collection_name]
         cursor = collection.find()
 
         # Iterate through all documents in the collection
         for document in cursor:
             # Extract job description field
-            job_description = document.get('job_description', None)
-            job_title = document.get('job_title', None)
-            job_apply_link = document.get('job_apply_link', None)
-            if job_description in result_list:
-                ans.append((job_title,job_apply_link))
-#test case    return set(ans)
+            if document.get('job_description', None) in result_list:
+                ans.append((document.get('job_title', None),document.get('job_apply_link', None)))
+    return set(ans)
 print(recommend("researcher  new york"))
