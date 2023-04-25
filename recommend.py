@@ -6,14 +6,16 @@ import pandas as pd
 from pymongo import MongoClient
 
 
-with open('transformer.json', 'r', encoding='utf-8') as f:
-    # Load the contents of the file into a dictionary
-    data = json.load(f)
-def recommend(userprofile, data):
-    # 这个是keylist
-    klist = list(data.keys())
-    #这个是valuelist，向量list
-    embeddinglist = [list(map(float, data[k])) for k in klist]
+def recommend(userprofile):
+    client = MongoClient('mongodb://localhost:27017')
+    db = client['bigdata']
+    collection = db['job_vectors']
+    klist = []
+    embeddinglist = []
+    for document in collection.find():
+        klist.append(document['job_description'])
+        embeddinglist.append(document['job_vector'])
+
     #model搞一个
     model = SentenceTransformer('distilbert-base-nli-stsb-mean-tokens')
     #encode一下user数据变成向量
@@ -26,8 +28,6 @@ def recommend(userprofile, data):
     df=pd.DataFrame({"sentence":klist,"similarityscore":similarity_matrix})
     result_list = df.sort_values(by=["similarityscore"], ascending=False).head(10)["sentence"].tolist()
 
-    client = MongoClient('mongodb://localhost:27017')
-    db = client['bigdata']
     ans=[]
     for collection_name in db.list_collection_names():
         collection = db[collection_name]
@@ -41,5 +41,5 @@ def recommend(userprofile, data):
             job_apply_link = document.get('job_apply_link', None)
             if job_description in result_list:
                 ans.append((job_title,job_apply_link))
-    return set(ans)
-print(recommend("researcher  new york", data))
+#test case    return set(ans)
+print(recommend("researcher  new york"))

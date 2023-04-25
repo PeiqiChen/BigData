@@ -16,12 +16,12 @@ def insert_json_to_mongodb(filename, collection):
 
 # 建立MongoDB连接
 
-client = pymongo.MongoClient("mongodb://localhost:27017")
+client = pymongo.MongoClient("mongodb://localhost:27017/")
 
 db = client["bigdata"]
 
 # 定义集合名称列表
-collections = ["cloud_developer", "data_scientist", "researcher", "software_engineer", "technical_manager"]
+collections = ["cloud_developer", "data_scientist", "jobs_data", "product_manager", "researcher", "software_engineer", "technical_manager"]
 
 # 遍历列表并插入到MongoDB
 for collection_name in collections:
