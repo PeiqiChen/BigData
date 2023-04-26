@@ -8,6 +8,13 @@ function Body(){
     const [data, setData] = useState([{}])
     const [feed, setFeed] = useState([])
     const [isLoading, setLoading] = useState(true)
+    const [info, setInfo] = useState({
+      rolename: "", location: ""
+    });
+  //   const searchHandler = (info) => {
+  //     console.log(info)
+  //     setInfo(info);
+  //  }
 
     useEffect(() => {
        // Create async function to fetch Reactjs posts from Reddit:
@@ -30,7 +37,7 @@ function Body(){
               }
           })
           // Save posts to feed state:
-          console.log(dataJson)
+          // console.log(dataJson)
           setFeed(posts)
           setData(dataJson)
           setLoading(false)
@@ -40,11 +47,16 @@ function Body(){
   
       // Invoke the fetchedJobsData function:
       fetchedJobsData()
-      }, [])
+      }, []);
+      
+    useEffect(() => {
+      console.log('info', info)
+    }, [info])
+
     return (
       <div>
         <SearchControlSmall /> 
-      <SearchControlLarge />
+        <SearchControlLarge changeInfo={setInfo} />
        
         <div className=" grid grid-cols-1 sm:grid-cols-1  md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-20 px-9 md:px-9 sm:px-20 ">
 
