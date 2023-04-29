@@ -6,8 +6,29 @@ import {
     FiSun,
   } from "react-icons/fi";
 import { AiFillCheckSquare } from "react-icons/ai";
+import { useState } from "react";
 
-function SearchControlLarge() {
+const SearchControlLarge = ({changeInfo}) => {
+
+  const [inputValue, setInputValue] = useState({
+    rolename: '', location: ''
+  })
+
+  const searchClickHandler = () => {
+    changeInfo({
+      rolename: inputValue.rolename,
+      location: inputValue.location
+    })
+ }
+
+ const handleRoleChange = (event) => {
+  setInputValue({rolename: event.target.value, location: inputValue.location});
+  }
+
+  const handleLocChange = (event) => {
+    setInputValue({rolename: inputValue.rolename, location: event.target.value});
+  }
+
     return (
       <div className="hidden md:block">
         <div className="max-w-full bg-white dark:bg-cardColor shadow-sm ml-10 mr-10 rounded-md absolute top-20 right-0 left-0 grid grid-cols-3 gap-4 px-4  mt-6 ">
@@ -17,6 +38,7 @@ function SearchControlLarge() {
               className="flex-grow mx-2 h-7 outline-none dark:bg-cardColor dark:text-gray-400 text-black"
               type="text"
               placeholder="Filter by text"
+              onChange={handleRoleChange}
             />
           </div>
           <div className="flex align-middle place-items-center border-r border-gray-300 dark:border-gray-700 py-3 ">
@@ -25,6 +47,7 @@ function SearchControlLarge() {
               className="flex-grow mx-2 h-7 outline-none dark:bg-cardColor dark:text-gray-400 text-black"
               type="text"
               placeholder="Filter by location"
+              onChange={handleLocChange}
             />
             </div> 
             <div className="justify-between  flex align-middle place-items-center">
@@ -34,7 +57,9 @@ function SearchControlLarge() {
                 Full Time Only
               </h3> */}
             </div>
-            <button className="bg-primary text-white font-bold text-xl px-8 py-2 rounded-md justify-self-end md:px-5 lg:px-8 hover:bg-primaryLight">
+            <button 
+            className="bg-primary text-white font-bold text-xl px-8 py-2 rounded-md justify-self-end md:px-5 lg:px-8 hover:bg-primaryLight"
+            onClick={searchClickHandler}>
               Search
             </button>
           </div>

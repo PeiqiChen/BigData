@@ -1,28 +1,24 @@
 from flask import Flask, request, render_template, redirect, session, jsonify
 import json
-import secrets
-
-from flask_login import login_manager
-from user import User, users_collection, db
-##from routes import bp as routes_bp
-from werkzeug.security import generate_password_hash, check_password_hash
-from bson import ObjectId
-import pymongo
-
+from flask_mongoengine import MongoEngine
+from flask_login import LoginManager
+from user import db
+from routes import bp as routes_bp
 
 app = Flask(__name__)
-app.secret_key = secrets.token_hex(16)
+app.register_blueprint(routes_bp)
 
 ##@app.route("/users")
 ##def users():
 ##    return {"users": ["pc3082", "user2", "user3"]}
 
 @app.route("/search/<role>/<location>")
-def search(role, location="United States"):
+def search(role, location="United States", date_posted='any_time', remote_jobs_only = False, employment_type = "FULLTIME"):
     f = open('test.json')
     data = json.load(f)
-    print(role)
-    print(location)
+    # list = search_jobs(role, location, date_posted, remote_jobs_only, employment_type)
+    # data = json.dumps(list)
+    # print(data)
     return data
 
 @app.route('/register', methods= ['GET', 'POST'])
@@ -95,4 +91,7 @@ def logout():
 
 
 if __name__ == "__main__":
+    client = pymongo.MongoClient("mongodb://localhost:27017")
+    db = client["bigdata"]
+    collections = ["cloud_developer", "data_scientist", "researcher", "software_engineer", "technical_manager"]
     app.run(debug=True)
