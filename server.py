@@ -1,9 +1,11 @@
 from flask import Flask, request, render_template, redirect, session, jsonify
 import json
-from flask_mongoengine import MongoEngine
 from flask_login import LoginManager
-from user import db
+from user import User, users_collection, check_password_hash
+import pymongo
 from routes import bp as routes_bp
+from bson.objectid import ObjectId
+from recommend import recommend
 
 app = Flask(__name__)
 app.register_blueprint(routes_bp)
@@ -16,9 +18,6 @@ app.register_blueprint(routes_bp)
 def search(role, location="United States", date_posted='any_time', remote_jobs_only = False, employment_type = "FULLTIME"):
     f = open('test.json')
     data = json.load(f)
-    # list = search_jobs(role, location, date_posted, remote_jobs_only, employment_type)
-    # data = json.dumps(list)
-    # print(data)
     return data
 
 @app.route('/register', methods= ['GET', 'POST'])
@@ -70,8 +69,9 @@ def dashboard():
     if user_id:
         # If user is logged in, retrieve user profile from database and render dashboard
         user = users_collection.find_one({'_id': ObjectId(user_id)})
+        jobs = recommend(user['tech_stack'])
         print(user)
-        return render_template('dashboard.html', user=user)
+        return render_template('dashboard.html', user=user, jobs = jobs)
     else:
         # If user is not logged in, redirect to login page
         return redirect('/login')
