@@ -8,7 +8,7 @@ from pymongo import MongoClient
 
 def recommend(userprofile):
     client = MongoClient('mongodb://localhost:27017')
-    db = client['bigdata']
+    db = client['jobs']
     collection = db['job_vectors']
     klist = []
     embeddinglist = []
