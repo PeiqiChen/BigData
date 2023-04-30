@@ -44,7 +44,6 @@ def search_jobs(job_title=None, location=None, date_posted=None, remote_jobs_onl
     df = pd.DataFrame(matching_jobs)
     # Save the DataFrame to an Excel file
     df.to_excel('result.xlsx', index=False)
-
     return matching_jobs
 
 
@@ -58,9 +57,9 @@ app = Flask(__name__)
 def users():
     return {"users": ["pc3082", "user2", "user3"]}
 
-@app.route("/search/<role>/<location>")
-def search(role, location="United States", date_posted='any_time', remote_jobs_only = False, employment_type = "FULLTIME"):
-    f = open('test.json')
+@app.route("/search/<role>/<location>/<date>/<remote>/<type>")
+def search(role, location="United States", date='any_time', remote = False, type = "FULLTIME"):
+    f = open('data/cloud_developer.json')#test.json')
     data = json.load(f)
     # list = search_jobs(role, location, date_posted, remote_jobs_only, employment_type)
     # data = json.dumps(list)
