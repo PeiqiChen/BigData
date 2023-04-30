@@ -8,7 +8,7 @@ from pymongo import MongoClient
 
 def recommend(userprofile):
     client = MongoClient('mongodb://localhost:27017')
-    db = client['jobs']
+    db = client['bigdata']
     collection = db['job_vectors']
     klist = []
     embeddinglist = []
@@ -38,6 +38,6 @@ def recommend(userprofile):
         for document in cursor:
             # Extract job description field
             if document.get('job_description', None) in result_list:
-                ans.append((document.get('job_title', None),document.get('job_apply_link', None)))
-    return set(ans)
-print(recommend("researcher  new york"))
+                ans.append((document.get('job_title', None),document.get('job_publisher', None),document.get('job_id', None),document.get('employer_name', None),document.get('job_posted_at_timestamp', None),document.get('job_employment_type', None),document.get('job_job_title', None),document.get('job_city', None),document.get('job_state', None)))
+    return json.dumps(list(set(ans)))
+#print(recommend("researcher  new york"))
