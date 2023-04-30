@@ -3,13 +3,14 @@ import json
 from flask_login import LoginManager
 from user import User, users_collection, check_password_hash
 import pymongo
-from routes import bp as routes_bp
+import secrets
+##from routes import bp as routes_bp
 from bson.objectid import ObjectId
-from recommend import recommend
+##from recommend import recommend
 
 app = Flask(__name__)
-app.register_blueprint(routes_bp)
-
+##app.register_blueprint(routes_bp)
+app.secret_key = secrets.token_hex(16)
 ##@app.route("/users")
 ##def users():
 ##    return {"users": ["pc3082", "user2", "user3"]}
@@ -69,9 +70,9 @@ def dashboard():
     if user_id:
         # If user is logged in, retrieve user profile from database and render dashboard
         user = users_collection.find_one({'_id': ObjectId(user_id)})
-        jobs = recommend(user['tech_stack'])
+        ##jobs = recommend(user['tech_stack'])
         print(user)
-        return render_template('dashboard.html', user=user, jobs = jobs)
+        return render_template('dashboard.html', user=user)
     else:
         # If user is not logged in, redirect to login page
         return redirect('/login')
