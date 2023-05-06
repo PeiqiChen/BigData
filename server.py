@@ -107,6 +107,7 @@ def dashboard():
         jobs = recommend(user['tech_stack'])
         ##
         print(user)
+        print(jobs)
         return render_template('dashboard.html', user=user, jobs = jobs)
     else:
         # If user is not logged in, redirect to login page
@@ -132,6 +133,7 @@ def search(role, location="United States", date='any_time', remote = False, type
     # list = search_jobs(role, location, date_posted, remote_jobs_only, employment_type)
     # data = json.dumps(list)
     # print(data)
+    
     return data
 
 if __name__ == "__main__":
