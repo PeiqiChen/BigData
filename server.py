@@ -6,7 +6,7 @@ import pymongo
 import secrets
 ##from routes import bp as routes_bp
 from bson.objectid import ObjectId
-##from recommend import recommend
+from recommend import recommend
 
 app = Flask(__name__)
 ##app.register_blueprint(routes_bp)
@@ -24,8 +24,6 @@ def search(role, location="United States", date_posted='any_time', remote_jobs_o
 @app.route('/register', methods= ['GET', 'POST'])
 def register():
     if request.method == 'POST':
-
-        # data = request.get_json()
         username =request.form.get('username')
         password = request.form.get('password')
         tech_stack = request.form.get('tech_stack')
@@ -70,9 +68,10 @@ def dashboard():
     if user_id:
         # If user is logged in, retrieve user profile from database and render dashboard
         user = users_collection.find_one({'_id': ObjectId(user_id)})
-        ##jobs = recommend(user['tech_stack'])
+        jobs = recommend(user['tech_stack'])
+        ##
         print(user)
-        return render_template('dashboard.html', user=user)
+        return render_template('dashboard.html', user=user, jobs = jobs)
     else:
         # If user is not logged in, redirect to login page
         return redirect('/login')

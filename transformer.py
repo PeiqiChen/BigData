@@ -9,7 +9,6 @@ joblist={}
 
 # 选择数据库
 db = client['bigdata']
-
 # 获取数据库中所有集合的名称
 collections = db.list_collection_names()
 
