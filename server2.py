@@ -74,7 +74,7 @@ def register():
 @app.route('/success', methods=['GET', 'POST'])
 def success():
 
-    print("user")
+    
     return render_template('success.html')
 
  # Define route for user login
