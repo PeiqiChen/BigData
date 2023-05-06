@@ -6,7 +6,7 @@ import pymongo
 import secrets
 ##from routes import bp as routes_bp
 from bson.objectid import ObjectId
-from recommend import recommend
+#from recommend import recommend
 
 app = Flask(__name__)
 ##app.register_blueprint(routes_bp)
@@ -15,47 +15,7 @@ app.secret_key = secrets.token_hex(16)
 ##def users():
 ##    return {"users": ["pc3082", "user2", "user3"]}
 
-@app.route("/search/<role>/<location>")
-def search(role, location="United States", date_posted='any_time', remote_jobs_only = False, employment_type = "FULLTIME"):
-    f = open('test.json')
-    data = json.load(f)
-    return data
-def search_jobs(job_title=None, location=None, date_posted=None, remote_jobs_only=None, employment_type=None):
-    query = {}
-    if job_title:
-        query["job_title"] = {"$regex": job_title, "$options": "i"} # Use a case-insensitive regex for partial matching
-    if location:
-        query["$or"] = [{"job_city": {"$regex": location, "$options": "i"}},
-                        {"job_state": {"$regex": location, "$options": "i"}},
-                        {"job_country": {"$regex": location, "$options": "i"}}]
-    if date_posted:
-        current_time = datetime.datetime.now()
-        if date_posted == "past_24_hours":
-            time_threshold = current_time - datetime.timedelta(days=1)
-        elif date_posted == "past_week":
-            time_threshold = current_time - datetime.timedelta(weeks=1)
-        elif date_posted == "past_month":
-            time_threshold = current_time - datetime.timedelta(weeks=4)
-        else:  # Default to any time
-            time_threshold = None
-        if time_threshold:
-            query["job_posted_at_datetime_utc"] = {"$gte": time_threshold.isoformat()}
-    if remote_jobs_only:
-        query["job_is_remote"] = True
-    if employment_type:
-        query["job_employment_type"] = {"$regex": employment_type, "$options": "i"}
 
-    matching_jobs = []
-    
-    for collection_name in collections:
-        collection = db[collection_name]
-        for job in collection.find(query):
-            matching_jobs.append(job)
-    # Create a pandas DataFrame from the job data
-    df = pd.DataFrame(matching_jobs)
-    # Save the DataFrame to an Excel file
-    df.to_excel('result.xlsx', index=False)
-    return matching_jobs
 
 @app.route('/register', methods= ['GET', 'POST'])
 def register():
@@ -104,11 +64,11 @@ def dashboard():
     if user_id:
         # If user is logged in, retrieve user profile from database and render dashboard
         user = users_collection.find_one({'_id': ObjectId(user_id)})
-        jobs = recommend(user['tech_stack'])
+        #jobs = recommend(user['tech_stack'])
         ##
         print(user)
-        print(jobs)
-        return render_template('dashboard.html', user=user, jobs = jobs)
+        #print(jobs)
+        return render_template('dashboard.html', user=user)
     else:
         # If user is not logged in, redirect to login page
         return redirect('/login')
