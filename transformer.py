@@ -8,7 +8,7 @@ client = MongoClient('mongodb://localhost:27017/')
 joblist={}
 
 # 选择数据库
-db = client['bigdata']
+db = client['jobs']
 # 获取数据库中所有集合的名称
 collections = db.list_collection_names()
 

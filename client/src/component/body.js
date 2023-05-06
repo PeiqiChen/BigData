@@ -9,18 +9,18 @@ function Body(){
     const [feed, setFeed] = useState([])
     const [isLoading, setLoading] = useState(true)
     const [info, setInfo] = useState({
-      rolename: "", location: ""
+      rolename: "", location: "",  date_posted: "", remote_jobs_only: false, employment_type: ""
     });
-  //   const searchHandler = (info) => {
-  //     console.log(info)
-  //     setInfo(info);
-  //  }
 
     useEffect(() => {
        // Create async function to fetch Reactjs posts from Reddit:
         async function fetchedJobsData() {
           setLoading(true)
-          const response = await fetch("/search/pc3082/software engineer")
+          const response = await fetch("/search/software engineer/New York/any/false/fulltime")
+          // US location
+          // detail into apply link
+          // console.log("/search/"+info.rolename+"/"+info.location+"/"+info.date_posted+"/"+info.remote_jobs_only+"/"+info.employment_type)
+          // const response = await fetch( "/search/"+info.rolename+"/"+info.location+"/"+info.date_posted+"/"+info.remote_jobs_only+"/"+info.employment_type)
           if (response.ok) {
             var dataJson = await response.json()
             dataJson = dataJson.data
@@ -31,9 +31,9 @@ function Body(){
             // ===================================================
             const posts = dataJson.map(post => {
               return {
-                title: post.title,
-                author: post.author,
-                id: post.id
+                title: post.job_title,
+                author: post.job_publisher,
+                id: post.job_id
               }
           })
           // Save posts to feed state:
@@ -63,7 +63,7 @@ function Body(){
             {isLoading ? [1,2,3,4,5,6,7,8,9,10,11,12].map(val => {
                 return <JobViewSkeleton/>
             }) :  feed.map(job => {
-               return data.map(job => <JobCard key={job.id} job={job}/>)
+               return data.map(job => <JobCard key={job.job_id} job={job}/>)
           })}
            {/* Mock Jobs Data */}
            {/* {Data.map(job => <JobCard key={job.id} job={job}/>)} */}
