@@ -1,18 +1,17 @@
 from flask_login import UserMixin
-from flask_mongoengine import MongoEngine
 from werkzeug.security import generate_password_hash, check_password_hash
-import pymongo
+from pymongo import MongoClient
 
-client = pymongo.MongoClient("mongodb://localhost:27017/")
-db = client["bigdata"]
+client = MongoClient("mongodb://localhost:27017/")
+db = client['bigdata']
 users_collection = db['users']  # Replace with your own collection name
 
 
 
 
 class User(UserMixin):
-    def __init__(self, id, username, password, tech_stack, location):
-        self.id = id
+    def __init__(self, username, password, tech_stack, location):
+        ##self.id = id
         self.username = username
         self.password_hash = generate_password_hash(password)
         self.tech_stack = tech_stack
@@ -30,7 +29,7 @@ class User(UserMixin):
         # Replace with your own logic to retrieve user from database
         user_data = users_collection.find_one({'id': user_id})
         if user_data:
-            user = User(id=user_data['id'], username = user_data['username'], password=user_data['password'],
+            user = User(username = user_data['username'], password=user_data['password'],
                         tech_stack=user_data['tech_stack'], location=user_data['location'])
             return user
         else:
@@ -39,7 +38,7 @@ class User(UserMixin):
     def save(self):
         # Convert user object to dictionary
         user_data = {
-            'id': self.id,
+            ##'id': self.id,
             'username': self.username,
             'password': self.password_hash,
             'tech_stack': self.tech_stack,

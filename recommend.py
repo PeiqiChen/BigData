@@ -40,4 +40,4 @@ def recommend(userprofile):
             if document.get('job_description', None) in result_list:
                 ans.append((document.get('job_title', None),document.get('job_publisher', None),document.get('job_id', None),document.get('employer_name', None),document.get('job_posted_at_timestamp', None),document.get('job_employment_type', None),document.get('job_job_title', None),document.get('job_city', None),document.get('job_state', None)))
     return json.dumps(list(set(ans)))
-print(recommend("researcher  new york"))
+#print(recommend("researcher  new york"))
