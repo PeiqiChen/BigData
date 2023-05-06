@@ -9,41 +9,82 @@ function Body(){
     const [feed, setFeed] = useState([])
     const [isLoading, setLoading] = useState(true)
     const [info, setInfo] = useState({
-      rolename: "", location: "",  date_posted: "", remote_jobs_only: false, employment_type: ""
+      rolename: '', location: '', date_posted: '', remote_jobs_only: false, employment_type:' '
     });
 
-    useEffect(() => {
-       // Create async function to fetch Reactjs posts from Reddit:
-        async function fetchedJobsData() {
-          setLoading(true)
-          const response = await fetch("/search/software engineer/New York/any/false/fulltime")
-          // US location
-          // detail into apply link
-          // console.log("/search/"+info.rolename+"/"+info.location+"/"+info.date_posted+"/"+info.remote_jobs_only+"/"+info.employment_type)
-          // const response = await fetch( "/search/"+info.rolename+"/"+info.location+"/"+info.date_posted+"/"+info.remote_jobs_only+"/"+info.employment_type)
-          if (response.ok) {
-            var dataJson = await response.json()
-            dataJson = dataJson.data
-            // data = dataJson.data
-            // Extract title, author and post id:
-            // ================= HERE TO APPLY FILTER using dataJson============
-            
-            // ===================================================
-            const posts = dataJson.map(post => {
-              return {
-                title: post.job_title,
-                author: post.job_publisher,
-                id: post.job_id
-              }
-          })
-          // Save posts to feed state:
-          // console.log(dataJson)
-          setFeed(posts)
-          setData(dataJson)
-          setLoading(false)
-          
-        }
+    async function fetchedJobsData() {
+      setLoading(true)
+      // const response = await fetch("/search/software engineer/New York/any/false/fulltime")
+      // US location
+      // detail into apply link
+      if(info.rolename===''){
+        info.rolename="Data Scientist"
+        info.location= "United States"
+        info.date_posted="any time"
+        info.remote_jobs_only= 'n'
+        info.employment_type="FULLTIME"
       }
+      console.log("/search/"+info.rolename+"/"+info.location+"/"+info.date_posted+"/"+info.remote_jobs_only+"/"+info.employment_type)
+      const response = await fetch( "/search/"+info.rolename+"/"+info.location+"/"+info.date_posted+"/"+info.remote_jobs_only+"/"+info.employment_type)
+      if (response.ok) {
+        var dataJson = await response.json()
+        dataJson = dataJson.data
+        // dataJson = dataJson
+        // Extract title, author and post id:
+        console.log(dataJson)
+        const posts = dataJson.map(post => {
+          return {
+            title: post.job_title,
+            author: post.job_publisher,
+            id: post.job_id
+          }
+      })
+      // Save posts to feed state:
+      
+      setFeed(posts)
+      setData(dataJson)
+      setLoading(false)
+      
+    }
+  }
+
+    useEffect(() => {
+      //  // Create async function to fetch Reactjs posts from Reddit:
+      //   async function fetchedJobsData() {
+      //     setLoading(true)
+      //     // const response = await fetch("/search/software engineer/New York/any/false/fulltime")
+      //     // US location
+      //     // detail into apply link
+      //     if(info.rolename===''){
+      //       info.rolename="Data Scientist"
+      //       info.location= "United States"
+      //       info.date_posted="any time"
+      //       info.remote_jobs_only= 'n'
+      //       info.employment_type="FULLTIME"
+      //     }
+      //     console.log("/search/"+info.rolename+"/"+info.location+"/"+info.date_posted+"/"+info.remote_jobs_only+"/"+info.employment_type)
+      //     const response = await fetch( "/search/"+info.rolename+"/"+info.location+"/"+info.date_posted+"/"+info.remote_jobs_only+"/"+info.employment_type)
+      //     if (response.ok) {
+      //       var dataJson = await response.json()
+      //       dataJson = dataJson.data
+      //       // dataJson = dataJson
+      //       // Extract title, author and post id:
+      //       console.log(dataJson)
+      //       const posts = dataJson.map(post => {
+      //         return {
+      //           title: post.job_title,
+      //           author: post.job_publisher,
+      //           id: post.job_id
+      //         }
+      //     })
+      //     // Save posts to feed state:
+          
+      //     setFeed(posts)
+      //     setData(dataJson)
+      //     setLoading(false)
+          
+      //   }
+      // }
   
       // Invoke the fetchedJobsData function:
       fetchedJobsData()
@@ -51,6 +92,7 @@ function Body(){
       
     useEffect(() => {
       console.log('info', info)
+      fetchedJobsData()
     }, [info])
 
     return (

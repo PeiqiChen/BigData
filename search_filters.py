@@ -139,21 +139,21 @@ def search_jobs(job_title=None, location=None, date_posted=None, remote_jobs_onl
 
     return matching_jobs
 
+##### comment out for running server #######
+# if __name__ == "__main__":
+#     job_title_filter = input("Enter job title (e.g., Data Scientist): ")
+#     location_filter = input("Enter location (city, state, or country): ")
+#     date_posted_filter = input("Enter date posted (any time, past 24 hours, past week, past month): ")
+#     remote_jobs_only_filter = input("Remote jobs only? (y/n): ").lower() == "y"
+#     employment_type_filter = input("Enter employment type (FULLTIME, CONTRACTOR, PARTTIME, INTERN): ")
+# #    sort_by_filter = input("Enter sorting type (most recent, most relevant): ")
 
-if __name__ == "__main__":
-    job_title_filter = input("Enter job title (e.g., Data Scientist): ")
-    location_filter = input("Enter location (city, state, or country): ")
-    date_posted_filter = input("Enter date posted (any time, past 24 hours, past week, past month): ")
-    remote_jobs_only_filter = input("Remote jobs only? (y/n): ").lower() == "y"
-    employment_type_filter = input("Enter employment type (FULLTIME, CONTRACTOR, PARTTIME, INTERN): ")
-#    sort_by_filter = input("Enter sorting type (most recent, most relevant): ")
 
+# result = search_jobs(job_title=job_title_filter, location=location_filter, date_posted=date_posted_filter,
+#                      remote_jobs_only=remote_jobs_only_filter, employment_type=employment_type_filter)
 
-result = search_jobs(job_title=job_title_filter, location=location_filter, date_posted=date_posted_filter,
-                     remote_jobs_only=remote_jobs_only_filter, employment_type=employment_type_filter)
+# # Create a pandas DataFrame from the job data
+# df = pd.DataFrame(result)
 
-# Create a pandas DataFrame from the job data
-df = pd.DataFrame(result)
-
-# Save the DataFrame to an Excel file
-df.to_excel('result.xlsx', index=False)
+# # Save the DataFrame to an Excel file
+# df.to_excel('result.xlsx', index=False)
