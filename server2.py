@@ -6,7 +6,7 @@ import pymongo
 import secrets
 ##from routes import bp as routes_bp
 from bson.objectid import ObjectId
-from recommend import recommend
+##from recommend import recommend
 
 app = Flask(__name__)
 ##app.register_blueprint(routes_bp)
@@ -24,7 +24,6 @@ def register():
         password = request.form.get('password')
         tech_stack = request.form.get('tech_stack')
         location = request.form.get('location')
-        #user_id = users_collection.count_documents({}) + 1
         user = User(username=username, password=password, tech_stack=tech_stack, location=location)
         user.save() 
         return redirect('/success')
@@ -50,28 +49,34 @@ def login():
         # If login credentials are valid, store user_id in session
             session['id'] = str(user['_id'])
             print(str(user['_id']))
-            return redirect('/dashboard')
+            return redirect('/dashboard/{}'.format(user['username']))
+            #return jsonify({'success': True, 'username': user['username']})
         else:
             error_message = 'Invalid username or password. Please try again.'
             return render_template('login.html', error_message=error_message)
+            #return jsonify({'success': False, 'message': error_message})
     else:
         return render_template('login.html')
     
-@app.route('/dashboard')
-def dashboard():
+@app.route('/dashboard/<username>')
+def dashboard(username):
     # Retrieve user ID from session
     user_id = session.get('id')
     if user_id:
         # If user is logged in, retrieve user profile from database and render dashboard
         user = users_collection.find_one({'_id': ObjectId(user_id)})
-        jobs = recommend(user['tech_stack'])
+        ##jobs = recommend(user['tech_stack'] + user['location'])
+        jobs = [["Data Scientist", "LinkedIn", "XPfmHZvGz0kAAAAAAAAAAA==", "Xorbix Technologies, Inc.", 1682018436, "FULLTIME", "Data scientist", null, null], ["Google Cloud Developers", "Salary.com", "V-ICfI4Ry5oAAAAAAAAAAA==", "Cosmos IT Solutions", 1678233600, "FULLTIME", null, null, null], ["Software Engineer (Python)", "LinkedIn", "nzwzIn5vA6gAAAAAAAAAAA==", "Concept International", 1681902463, "FULLTIME", "Software engineer", null, null], ["ERP Oracle Cloud Developer - Oracle HCM", "LinkedIn", "qeFQHc7dvMAAAAAAAAAAAA==", "CyberCoders", 1681837173, "FULLTIME", null, "Farmington", "MI"], ["Software Engineer (Mid)", "Careers - Sev1Tech, LLC. - ICIMS", "4SL3vhydGPoAAAAAAAAAAA==", "Sev1Tech", 1618751508, "FULLTIME", "Software engineer", null, null], ["Senior Cloud Developer - Full Stack", "Indeed", "34CyhBk-iaQAAAAAAAAAAA==", "Avance Consulting", 1682033555, "FULLTIME", "Senior", null, null], ["Cloud Developer", "Snagajob", "GrvNB_moe6sAAAAAAAAAAA==", "Collabera", 1681860282, "FULLTIME", null, "Columbus", "OH"], ["Software/Cloud Developer", "WGN-TV Jobs", "rWz6fFMDmqoAAAAAAAAAAA==", "GENERAL DYNAMICS INFORMATION TECHNOLOGY", 1681023958, "FULLTIME", null, null, "MA"], ["Quantitative Researcher", "Salary.com", "9OSFUWJ_1HYAAAAAAAAAAA==", "Aresfi", 1681862400, "FULLTIME", "Researcher", "Incline Village", "NV"], ["Lead Cloud Developer(AWS)", "Indeed", "PmQjIr8xXCAAAAAAAAAAAA==", "FalconSmartIT", 1666122377, "FULLTIME", null, "Dover", "DE"]]
+
         ##
         print(user)
-        print(jobs)
-        return render_template('dashboard.html', user=user, jobs = jobs)
+        ##print(jobs)
+        #return jsonify({'success': True, 'user': user})
+        return render_template('dashboard.html', user=user, jobs=jobs)
     else:
         # If user is not logged in, redirect to login page
         return redirect('/login')
+        #return jsonify({'success': False, 'message': 'User not logged in.'})
     
 @app.route('/findall')
 def findall():
