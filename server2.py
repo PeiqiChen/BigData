@@ -6,7 +6,7 @@ import pymongo
 import secrets
 ##from routes import bp as routes_bp
 from bson.objectid import ObjectId
-##from recommend import recommend
+from recommend import recommend
 
 app = Flask(__name__)
 ##app.register_blueprint(routes_bp)
@@ -22,13 +22,14 @@ def register():
     if request.method == 'POST':
         username =request.form.get('username')
         password = request.form.get('password')
+        jobs_for_looking = request.form.get('jobs_for_looking')
         tech_stack = request.form.get('tech_stack')
         location = request.form.get('location')
-        user = User(username=username, password=password, tech_stack=tech_stack, location=location)
+        user = User(username=username, password=password, jobs_for_looking=jobs_for_looking, tech_stack=tech_stack, location=location)
         user.save() 
         return redirect('/success')
 
-    return render_template('signup.html')
+    return render_template('index.html')
 
 @app.route('/success', methods=['GET', 'POST'])
 def success():
@@ -65,9 +66,9 @@ def recommend(username):
     if user_id:
         # If user is logged in, retrieve user profile from database and render dashboard
         user = users_collection.find_one({'_id': ObjectId(user_id)})
-        ##jobs = recommend(user['tech_stack'] + user['location'])
+        jobs = recommend(user['tech_stack'] + user['location'] + user['jobs_for_looking'])
         null = None
-        jobs = [["Data Scientist", "LinkedIn", "XPfmHZvGz0kAAAAAAAAAAA==", "Xorbix Technologies, Inc.", 1682018436, "FULLTIME", "Data scientist", null, null], ["Google Cloud Developers", "Salary.com", "V-ICfI4Ry5oAAAAAAAAAAA==", "Cosmos IT Solutions", 1678233600, "FULLTIME", null, null, null], ["Software Engineer (Python)", "LinkedIn", "nzwzIn5vA6gAAAAAAAAAAA==", "Concept International", 1681902463, "FULLTIME", "Software engineer", null, null], ["ERP Oracle Cloud Developer - Oracle HCM", "LinkedIn", "qeFQHc7dvMAAAAAAAAAAAA==", "CyberCoders", 1681837173, "FULLTIME", null, "Farmington", "MI"], ["Software Engineer (Mid)", "Careers - Sev1Tech, LLC. - ICIMS", "4SL3vhydGPoAAAAAAAAAAA==", "Sev1Tech", 1618751508, "FULLTIME", "Software engineer", null, null], ["Senior Cloud Developer - Full Stack", "Indeed", "34CyhBk-iaQAAAAAAAAAAA==", "Avance Consulting", 1682033555, "FULLTIME", "Senior", null, null], ["Cloud Developer", "Snagajob", "GrvNB_moe6sAAAAAAAAAAA==", "Collabera", 1681860282, "FULLTIME", null, "Columbus", "OH"], ["Software/Cloud Developer", "WGN-TV Jobs", "rWz6fFMDmqoAAAAAAAAAAA==", "GENERAL DYNAMICS INFORMATION TECHNOLOGY", 1681023958, "FULLTIME", null, null, "MA"], ["Quantitative Researcher", "Salary.com", "9OSFUWJ_1HYAAAAAAAAAAA==", "Aresfi", 1681862400, "FULLTIME", "Researcher", "Incline Village", "NV"], ["Lead Cloud Developer(AWS)", "Indeed", "PmQjIr8xXCAAAAAAAAAAAA==", "FalconSmartIT", 1666122377, "FULLTIME", null, "Dover", "DE"]]
+        ##jobs = [["Data Scientist", "LinkedIn", "XPfmHZvGz0kAAAAAAAAAAA==", "Xorbix Technologies, Inc.", 1682018436, "FULLTIME", "Data scientist", null, null], ["Google Cloud Developers", "Salary.com", "V-ICfI4Ry5oAAAAAAAAAAA==", "Cosmos IT Solutions", 1678233600, "FULLTIME", null, null, null], ["Software Engineer (Python)", "LinkedIn", "nzwzIn5vA6gAAAAAAAAAAA==", "Concept International", 1681902463, "FULLTIME", "Software engineer", null, null], ["ERP Oracle Cloud Developer - Oracle HCM", "LinkedIn", "qeFQHc7dvMAAAAAAAAAAAA==", "CyberCoders", 1681837173, "FULLTIME", null, "Farmington", "MI"], ["Software Engineer (Mid)", "Careers - Sev1Tech, LLC. - ICIMS", "4SL3vhydGPoAAAAAAAAAAA==", "Sev1Tech", 1618751508, "FULLTIME", "Software engineer", null, null], ["Senior Cloud Developer - Full Stack", "Indeed", "34CyhBk-iaQAAAAAAAAAAA==", "Avance Consulting", 1682033555, "FULLTIME", "Senior", null, null], ["Cloud Developer", "Snagajob", "GrvNB_moe6sAAAAAAAAAAA==", "Collabera", 1681860282, "FULLTIME", null, "Columbus", "OH"], ["Software/Cloud Developer", "WGN-TV Jobs", "rWz6fFMDmqoAAAAAAAAAAA==", "GENERAL DYNAMICS INFORMATION TECHNOLOGY", 1681023958, "FULLTIME", null, null, "MA"], ["Quantitative Researcher", "Salary.com", "9OSFUWJ_1HYAAAAAAAAAAA==", "Aresfi", 1681862400, "FULLTIME", "Researcher", "Incline Village", "NV"], ["Lead Cloud Developer(AWS)", "Indeed", "PmQjIr8xXCAAAAAAAAAAAA==", "FalconSmartIT", 1666122377, "FULLTIME", null, "Dover", "DE"]]
 
         ##
         print(user)

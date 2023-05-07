@@ -10,10 +10,11 @@ users_collection = db['users']  # Replace with your own collection name
 
 
 class User(UserMixin):
-    def __init__(self, username, password, tech_stack, location):
+    def __init__(self, username, password, jobs_for_looking, tech_stack, location):
         ##self.id = id
         self.username = username
         self.password_hash = generate_password_hash(password)
+        self.jobs_for_looking = jobs_for_looking
         self.tech_stack = tech_stack
         self.location = location
 
@@ -29,7 +30,7 @@ class User(UserMixin):
         # Replace with your own logic to retrieve user from database
         user_data = users_collection.find_one({'id': user_id})
         if user_data:
-            user = User(username = user_data['username'], password=user_data['password'],
+            user = User(username = user_data['username'], password=user_data['password'], jobs_for_looking= user_data['jobs_for_looking'],
                         tech_stack=user_data['tech_stack'], location=user_data['location'])
             return user
         else:
@@ -41,6 +42,7 @@ class User(UserMixin):
             ##'id': self.id,
             'username': self.username,
             'password': self.password_hash,
+            'jobs_for_looking': self.jobs_for_looking,
             'tech_stack': self.tech_stack,
             'location': self.location
         }

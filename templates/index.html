@@ -1,11 +1,9 @@
 <!DOCTYPE html><!--  This site was created in Webflow. https://www.webflow.com  -->
 <!--  Last Published: Sun May 07 2023 21:07:14 GMT+0000 (Coordinated Universal Time)  -->
-<html data-wf-page="644eeda4afc0452245b14c71" data-wf-site="644edb2d5896be104152c4d5">
+<html data-wf-page="644edb2d5896be3a5352c4d6" data-wf-site="644edb2d5896be104152c4d5">
 <head>
   <meta charset="utf-8">
-  <title>login</title>
-  <meta content="login" property="og:title">
-  <meta content="login" property="twitter:title">
+  <title>Iris&#x27;s Sublime Site</title>
   <meta content="width=device-width, initial-scale=1" name="viewport">
   <meta content="Webflow" name="generator">
   <link href="css/normalize.css" rel="stylesheet" type="text/css">
@@ -23,15 +21,13 @@
 <body>
   <div class="wf-section">
     <h1 class="heading"><span class="text-span">quickJOB</span></h1>
+    <h3 class="heading-2">Register</h3>
   </div>
-  <div class="wf-section">
-    <h3 class="heading-2">Log in</h3>
+  <div class="w-container">
     <div class="w-form">
-      <form id="wf-form-" name="wf-form-" data-name="" action="/login" method="post"><label for="username-2">Username</label><input type="text" class="w-input" maxlength="256" name="username" data-name="username" placeholder="" id="username-2"><label for="password-2">Password</label><input type="password" class="w-input" maxlength="256" name="password" data-name="password" placeholder="" id="password-2" required=""><input type="submit" value="Log in" data-wait="Please wait..." class="w-button">
-        <div>Don&#x27;t have an account? </div>
-        <a href="/register">Sign up</a>
+      <form method="post" name="wf-form-" data-name=""  action="/register" id="register-form" ><label for="username-2">Username</label><input type="text" class="w-input" maxlength="256" name="username" data-name="username" placeholder="" id="username-2" required=""><label for="password-2">Password</label><input type="password" class="w-input" maxlength="256" name="password" data-name="password" placeholder="Password must be at least 8 characters" id="password-2" required=""><label for="jobs_for_looking-2">jobs_for_looking</label><input type="jobs_for_looking" class="w-input" maxlength="256" name="jobs_for_looking" data-name="jobs_for_looking" placeholder="" id="jobs_for_looking-2" required=""><label for="tech_stack-2">tech-Stack</label><input type="tech_stack" class="w-input" maxlength="256" name="tech_stack" data-name="tech_stack" placeholder="" id="tech_stack-2" required=""><label for="location">location</label><input type="location" class="w-input" maxlength="256" name="location" data-name="location" placeholder="" id="location" required=""><input type="submit" value="rigister" data-wait="Please wait..." class="w-button">
+        <a href="/login" class="button w-button">Already have an account? Go to login</a>
       </form>
-      <div id="error-message">{{error_message}}</div>
       <div class="w-form-done">
         <div>Thank you! Your submission has been received!</div>
       </div>
