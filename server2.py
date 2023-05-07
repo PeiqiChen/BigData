@@ -49,7 +49,7 @@ def login():
         # If login credentials are valid, store user_id in session
             session['id'] = str(user['_id'])
             print(str(user['_id']))
-            return redirect('/dashboard/{}'.format(user['username']))
+            return redirect('/recommend/{}'.format(user['username']))
             #return jsonify({'success': True, 'username': user['username']})
         else:
             error_message = 'Invalid username or password. Please try again.'
@@ -58,8 +58,8 @@ def login():
     else:
         return render_template('login.html')
     
-@app.route('/dashboard/<username>')
-def dashboard(username):
+@app.route('/recommend/<username>')
+def recommend(username):
     # Retrieve user ID from session
     user_id = session.get('id')
     if user_id:
