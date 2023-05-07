@@ -1,19 +1,17 @@
 from flask import Flask
 import json
 from search_filters import search_jobs
+from recommend import recommend
 import pymongo
-import datetime
 import pandas as pd
 from bson.json_util import dumps
-# from flask_mongoengine import MongoEngine
-# from flask_login import LoginManager
-# from user import db
-# from routes import bp as routes_bp
+import secrets
 
 
 
 app = Flask(__name__)
-# app.register_blueprint(routes_bp)
+app.secret_key = secrets.token_hex(16)
+
 
 @app.route("/users")
 def users():
@@ -42,15 +40,43 @@ def search(role, location, date, remote, type):
     return data
 
 @app.route("/recommend/username/userinfo")
-def recommend(username, userinfo):
-    f = open('data/cloud_developer.json')#test.json')
-    data = json.load(f)
-    print(username, userinfo)
+def recommend_job(username, userinfo):
+    # f = open('data/cloud_developer.json')#test.json')
+    # data = json.load(f)
+    # print(username, userinfo)
+    ##
+    '''["User Experience Researcher", "Greenhouse", "1Vq_lpiZB_wAAAAAAAAAAA==", 
+    "Intrinsic", 1676937600, "FULLTIME", 
+    "Researcher", "Mountain View", "CA"], '''
+    list = recommend(username+ userinfo)
+    keys = ['job_title','job_publisher','job_id',
+            'employer_name','job_posted_at_timestamp','job_employment_type',
+            'job_job_title', 'job_city','job_state']
+    data_map = []
+    list = list.replace("\"","")
+    list = list.replace("[[","")
+    list = list.replace("]]","")
+    for l in list.split("], ["):
+        # print(l)
+        ele = l.split(", ")
+        tmp = {}
+        idx = 0
+        for idx in range(0,len(ele)):
+            # print(ele)
+            if ele[idx] == 'null':
+                tmp[keys[idx]] = ''
+            else:
+                tmp[keys[idx]] = ele[idx]
+            idx += 1
+
+        data_map.append(tmp)
+    data = json.dumps(data_map)
     return data
 
 
 if __name__ == "__main__":
-    client = pymongo.MongoClient("mongodb://localhost:27017")
-    db = client["bigdata"]
-    collections = ["cloud_developer", "data_scientist", "researcher", "software_engineer", "technical_manager"]
-    app.run(debug=True)
+    # client = pymongo.MongoClient("mongodb://localhost:27017")
+    # db = client["bigdata"]
+    # collections = ["cloud_developer", "data_scientist", "researcher", "software_engineer", "technical_manager"]
+    # app.run(debug=True)
+    data = recommend_job("researcher", "new york")
