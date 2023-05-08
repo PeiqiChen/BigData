@@ -8,7 +8,7 @@ import secrets
 from bson.objectid import ObjectId
 #from recommend import recommend
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static', static_folder='templates/static')
 ##app.register_blueprint(routes_bp)
 app.secret_key = secrets.token_hex(16)
 ##@app.route("/users")
