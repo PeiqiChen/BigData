@@ -3,7 +3,7 @@ import SearchControlSmall from './searchControlSmall.js';
 import SearchControlLarge from './searchControlLarge.js';
 import { useEffect, useState } from 'react'
 import JobCard from './JobCard.js';
-
+import JobViewSkeleton from './jobViewSkeleton.js'
 function Body(){
     const [data, setData] = useState([{}])
     const [feed, setFeed] = useState([])
@@ -49,43 +49,6 @@ function Body(){
   }
 
     useEffect(() => {
-      //  // Create async function to fetch Reactjs posts from Reddit:
-      //   async function fetchedJobsData() {
-      //     setLoading(true)
-      //     // const response = await fetch("/search/software engineer/New York/any/false/fulltime")
-      //     // US location
-      //     // detail into apply link
-      //     if(info.rolename===''){
-      //       info.rolename="Data Scientist"
-      //       info.location= "United States"
-      //       info.date_posted="any time"
-      //       info.remote_jobs_only= 'n'
-      //       info.employment_type="FULLTIME"
-      //     }
-      //     console.log("/search/"+info.rolename+"/"+info.location+"/"+info.date_posted+"/"+info.remote_jobs_only+"/"+info.employment_type)
-      //     const response = await fetch( "/search/"+info.rolename+"/"+info.location+"/"+info.date_posted+"/"+info.remote_jobs_only+"/"+info.employment_type)
-      //     if (response.ok) {
-      //       var dataJson = await response.json()
-      //       dataJson = dataJson.data
-      //       // dataJson = dataJson
-      //       // Extract title, author and post id:
-      //       console.log(dataJson)
-      //       const posts = dataJson.map(post => {
-      //         return {
-      //           title: post.job_title,
-      //           author: post.job_publisher,
-      //           id: post.job_id
-      //         }
-      //     })
-      //     // Save posts to feed state:
-          
-      //     setFeed(posts)
-      //     setData(dataJson)
-      //     setLoading(false)
-          
-      //   }
-      // }
-  
       // Invoke the fetchedJobsData function:
       fetchedJobsData()
       }, []);
@@ -117,27 +80,6 @@ function Body(){
     );
 }
 
- function JobViewSkeleton() {
-    return (
-      <div className='p-8 pt-0 mx-auto bg-white   my-4  dark:bg-cardColor rounded-md shadow animate-pulse dark:bg-very-dark-blue w-76  w-full '>
-        <div
-          className={
-            'text-white font-b  absolute grid w-12 h-12 p-2 transform -translate-y-1/2 place-items-center rounded-2xl bg-gray-400'
-          }
-        ></div>
-        <div className='flex items-center pt-12 text-base leading-5 text-dark-grey'>
-          <p className='w-6/12 h-4 bg-gray-400 rounded'></p>
-        </div>
-        <div className='mt-3'>
-          <h2 className='w-8/12 h-4 text-lg  leading-6 bg-gray-400 rounded text-very-dark-blue dark:text-white'></h2>
-        </div>
-        <div>
-          <p className='w-5/12 h-4 mt-3 text-base font-normal leading-5 bg-gray-400 rounded text-dark-grey'></p>
-        </div>
-        <div>
-          <p className='w-3/12 h-4 mt-10 text-sm  bg-gray-400 rounded text-violet'></p>
-        </div>
-      </div>
-    )
-  }
+
+ 
 export default Body ;
