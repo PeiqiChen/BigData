@@ -95,7 +95,7 @@ const SearchControlLarge = ({changeInfo}) => {
             <input
               className="flex-grow mx-2 h-7 outline-none dark:bg-cardColor dark:text-gray-400 text-black"
               type="text"
-              placeholder="Loc(City, State)"
+              placeholder="Country|State|City"
               onChange={handleLocChange}
             />
           </div> 
@@ -103,13 +103,13 @@ const SearchControlLarge = ({changeInfo}) => {
             {/* <div className="flex  place-items-center"> */}
             <div className="flex align-middle place-items-center border-r border-gray-300 dark:border-gray-700 py-3 ">
               <DropdownButton title="Date Posted" onSelect={handleDataChange}>
-                <Dropdown.Item eventKey='past_24_hours'>
+                <Dropdown.Item eventKey='past 24 hours'>
                   past 24 hours
                 </Dropdown.Item>
-                <Dropdown.Item eventKey='past_week'>
+                <Dropdown.Item eventKey='past week'>
                   past week
                 </Dropdown.Item>
-                <Dropdown.Item eventKey='past_month'>
+                <Dropdown.Item eventKey='past month'>
                  past  month
                 </Dropdown.Item>
                 <Dropdown.Item eventKey='any'>

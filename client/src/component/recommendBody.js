@@ -8,7 +8,7 @@ function RecommendBody(){
     const [feed, setFeed] = useState([])
     const [isLoading, setLoading] = useState(true)
     const [info, setInfo] = useState({
-      username: '', userinfo: ''
+      username: 'Yufan', userinfo: 'Software Engineering'
     });
     async function fetchedJobsData() {
         setLoading(true)

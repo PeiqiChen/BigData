@@ -29,7 +29,7 @@ function JobCard(props) {
       <div className="px-5">
         <div className="block text-subtitle text-base font-normal ">
           <p>
-            {new Date(job.job_posted_at_timestamp).toLocaleDateString()} · {job.job_employment_type}
+            {new Date(job.job_posted_at_timestamp * 1000 ).toLocaleDateString()} · {job.job_employment_type}
           </p>
         </div>
         <div className="text-xl dark:text-white font-bold  py-5">{job.job_title}</div>

@@ -12,7 +12,7 @@ from bson.objectid import ObjectId
 
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static', static_folder='templates/static')
 app.secret_key = secrets.token_hex(16)
 
 
