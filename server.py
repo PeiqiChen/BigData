@@ -59,29 +59,12 @@ def recommend_job(username, userinfo):
     '''["User Experience Researcher", "Greenhouse", "1Vq_lpiZB_wAAAAAAAAAAA==",
     "Intrinsic", 1676937600, "FULLTIME",
     "Researcher", "Mountain View", "CA"], '''
-    list = recommend(userinfo)
-    # print(list)
+
+    recommendlist = json.loads(recommend(userinfo))
     keys = ['job_title','job_publisher','job_id',
             'employer_name','job_posted_at_timestamp','job_employment_type',
             'job_job_title', 'job_city','job_state']
-    data_map = []
-    list = list.replace("\"","")
-    list = list.replace("[[","")
-    list = list.replace("]]","")
-    for l in list.split("], ["):
-        print(l)
-        ele = l.split("\", \"")
-        # print(ele,",,,,,",ele[0])
-        tmp = {}
-        idx = 0
-        for idx in range(0,len(ele)):
-            if ele[idx] == 'null':
-                tmp[keys[idx]] = ''
-            else:
-                tmp[keys[idx]] = ele[idx]
-            idx += 1
-
-        data_map.append(tmp)
+    data_map =  [{keys[i]: row[i] for i in range(len(keys))} for row in recommendlist]
     data = json.dumps(data_map)
     # print(data)
     return data
