@@ -26,7 +26,7 @@ def register():
         tech_stack = request.form.get('tech_stack')
         location = request.form.get('location')
         user = User(username=username, password=password, jobs_for_looking=jobs_for_looking, tech_stack=tech_stack, location=location)
-        user.save() 
+        user.save()
         return redirect('/success')
 
     return render_template('index.html')
@@ -34,7 +34,7 @@ def register():
 @app.route('/success', methods=['GET', 'POST'])
 def success():
 
-    
+
     return render_template('success.html')
 
  # Define route for user login
@@ -50,7 +50,7 @@ def login():
         # If login credentials are valid, store user_id in session
             session['id'] = str(user['_id'])
             print(str(user['_id']))
-            return redirect('/recommend/{}'.format(user['username']))
+            return redirect('http://localhost:3000/react-octo-job-search-003')
             #return jsonify({'success': True, 'username': user['username']})
         else:
             error_message = 'Invalid username or password. Please try again.'
@@ -58,7 +58,7 @@ def login():
             #return jsonify({'success': False, 'message': error_message})
     else:
         return render_template('login.html')
-    
+
 @app.route('/recommend/<username>', methods=['GET','POST'])
 def recommend(username):
     # Retrieve user ID from session
@@ -79,10 +79,10 @@ def recommend(username):
         # If user is not logged in, redirect to login page
         return redirect('/login')
         #return jsonify({'success': False, 'message': 'User not logged in.'})
-    
+
 @app.route('/findall')
 def findall():
-    alluser =  users_collection.find()  
+    alluser =  users_collection.find()
     for u in alluser:
         print(u)
     return render_template('findall.html',users=alluser)
@@ -100,11 +100,11 @@ def search(role, location="United States", date='any_time', remote = False, type
     # list = search_jobs(role, location, date_posted, remote_jobs_only, employment_type)
     # data = json.dumps(list)
     # print(data)
-    
+
     return data
 
 if __name__ == "__main__":
     client = pymongo.MongoClient("mongodb://localhost:27017")
     db = client["bigdata"]
     collections = ["cloud_developer", "data_scientist", "researcher", "software_engineer", "technical_manager"]
-    app.run(debug=True)
+    app.run(port=5001)

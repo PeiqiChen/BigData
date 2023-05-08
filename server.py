@@ -35,8 +35,8 @@ def search(role, location, date, remote, type):
         json_data = json.loads(tmp)
         data = {}
         data['data'] = json_data
-        data = json.dumps(data)  
-        
+        data = json.dumps(data)
+
     return data
 
 @app.route("/recommend/<username>/<userinfo>")
@@ -45,10 +45,16 @@ def recommend_job(username, userinfo):
     # data = json.load(f)
     # print(username, userinfo)
     ##
-    '''["User Experience Researcher", "Greenhouse", "1Vq_lpiZB_wAAAAAAAAAAA==", 
-    "Intrinsic", 1676937600, "FULLTIME", 
+    document = collection.find_one(sort=[("_id", pymongo.DESCENDING)])
+    tech_stack = document['bigdata']['user'].get('tech_stack', '')
+    location = document['bigdata']['user'].get('location', '')
+    jobs_for_looking = document['bigdata']['user'].get('jobs_for_looking', '')
+    userinfo=jobs_for_looking+location+tech_stack
+
+    '''["User Experience Researcher", "Greenhouse", "1Vq_lpiZB_wAAAAAAAAAAA==",
+    "Intrinsic", 1676937600, "FULLTIME",
     "Researcher", "Mountain View", "CA"], '''
-    list = recommend(username+ userinfo)
+    list = recommend(userinfo)
     keys = ['job_title','job_publisher','job_id',
             'employer_name','job_posted_at_timestamp','job_employment_type',
             'job_job_title', 'job_city','job_state']
@@ -79,4 +85,5 @@ if __name__ == "__main__":
     client = pymongo.MongoClient("mongodb://localhost:27017")
     db = client["bigdata"]
     collections = ["cloud_developer", "data_scientist", "researcher", "software_engineer", "technical_manager"]
+    usercollect=['users']
     app.run(debug=True)
