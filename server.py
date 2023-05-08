@@ -45,11 +45,12 @@ def recommend_job(username, userinfo):
     # data = json.load(f)
     # print(username, userinfo)
     ##
-    document = collection.find_one(sort=[("_id", pymongo.DESCENDING)])
-    tech_stack = document['bigdata']['user'].get('tech_stack', '')
-    location = document['bigdata']['user'].get('location', '')
-    jobs_for_looking = document['bigdata']['user'].get('jobs_for_looking', '')
+    document = db['bigdata']['user'].find_one(sort=[("_id", pymongo.DESCENDING)])
+    tech_stack = document.get('tech_stack', '')
+    location = document.get('location', '')
+    jobs_for_looking = document.get('jobs_for_looking', '')
     userinfo=jobs_for_looking+location+tech_stack
+    print(userinfo)
 
     '''["User Experience Researcher", "Greenhouse", "1Vq_lpiZB_wAAAAAAAAAAA==",
     "Intrinsic", 1676937600, "FULLTIME",
