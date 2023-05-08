@@ -7,34 +7,32 @@ import {
   FiSearch,
   FiSun,
 } from "react-icons/fi";
-
 import SearchControlSmall from './searchControlSmall.js';
 import SearchControlLarge from './searchControlLarge.js';
 import React, {useState} from "react";
 
-function Header() {
+function Header({changeBody}) {
+// function Header() {
 
-  // var style = {
-  //   'display': 'none';
-  // }
-
-  const[hasBar, setBar] = useState(false);
+  const[hasBar, setBar] = useState(true);
+  const handleClick = (e) => {
+    // console.log(e)
+    setBar(e)
+    changeBody({searchBody: !hasBar})
+  }
 
   return (
     <div className="container max-w-full relative">
       <header className="bg-primary space-x-4 pl-8 pr-4 pb-8 pt-4 flex place-content-between ">
         <div className="inline-block text-3xl font-bold text-white">
-          <button onClick = {() => setBar(true)}>{hasBar ? <strong>search</strong> : 'search |'}</button>
-          <button onClick = {() => setBar(false)}>{!hasBar ? <strong>recommendation</strong> : '| recommendation'}</button>
+          <button onClick = {() => handleClick(true)}>{hasBar ? <strong>search</strong> : 'search |'}</button>
+          <button onClick = {() => handleClick(false)}>{!hasBar ? <strong>recommendation</strong> : '| recommendation'}</button>
         </div>
         <div className="inline-block text-3xl font-bold text-white">
           {/* <button onClick = {() => setBar(false)}>profile</button> */}
         </div>
         <Toggle />
       </header>
-      {/* <div>{hasBar ? <div className="navBar"><SearchControlLarge /><SearchControlSmall /></div> : <div></div>}</div> */}
-      {/* <SearchControlSmall /> */}
-      {/* <SearchControlLarge /> */}
     </div>
   );
 }

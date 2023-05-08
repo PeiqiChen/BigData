@@ -75,7 +75,7 @@ const RecommendControlLarge = ({changeInfo}) => {
       <div className="hidden md:block">
         <div className="max-w-full bg-white dark:bg-cardColor shadow-sm ml-10 mr-10 rounded-md absolute top-20 right-0 left-0 grid grid-cols-6 gap-4 px-4  mt-6 ">
           <div className="flex align-middle place-items-center border-r border-gray-300 dark:border-gray-700 py-7 flex-grow ">
-            <FiSearch className="inline-block  text-primary text-2xl" />
+            {/* <FiSearch className="inline-block  text-primary text-2xl" /> */}
             <input
               className="flex-grow mx-2 h-7 outline-none dark:bg-cardColor dark:text-gray-400 text-black"
               type="text"
@@ -84,7 +84,7 @@ const RecommendControlLarge = ({changeInfo}) => {
             />
           </div>
           <div className="flex align-middle place-items-center border-r border-gray-300 dark:border-gray-700 py-3 ">
-            <FiMapPin className="inline-block  text-primary text-2xl" /> 
+            {/* <FiMapPin className="inline-block  text-primary text-2xl" />  */}
             <input
               className="flex-grow mx-2 h-7 outline-none dark:bg-cardColor dark:text-gray-400 text-black"
               type="text"

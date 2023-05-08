@@ -39,7 +39,7 @@ def search(role, location, date, remote, type):
         
     return data
 
-@app.route("/recommend/username/userinfo")
+@app.route("/recommend/<username>/<userinfo>")
 def recommend_job(username, userinfo):
     # f = open('data/cloud_developer.json')#test.json')
     # data = json.load(f)
@@ -71,12 +71,12 @@ def recommend_job(username, userinfo):
 
         data_map.append(tmp)
     data = json.dumps(data_map)
+    # print(data)
     return data
 
 
 if __name__ == "__main__":
-    # client = pymongo.MongoClient("mongodb://localhost:27017")
-    # db = client["bigdata"]
-    # collections = ["cloud_developer", "data_scientist", "researcher", "software_engineer", "technical_manager"]
-    # app.run(debug=True)
-    data = recommend_job("researcher", "new york")
+    client = pymongo.MongoClient("mongodb://localhost:27017")
+    db = client["bigdata"]
+    collections = ["cloud_developer", "data_scientist", "researcher", "software_engineer", "technical_manager"]
+    app.run(debug=True)
